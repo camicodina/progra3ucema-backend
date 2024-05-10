@@ -1,4 +1,4 @@
-package com.ucema.progra3ucemabackend;
+package src.main.java.com.ucema.progra3ucemabackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
