@@ -1,7 +1,7 @@
-<p align="right"><img width=20% src="https://ucema.edu.ar/themes/ucema_bootstrap/logo.svg"></p>
+<p align="right"><img width=10% src="https://ucema.edu.ar/themes/ucema_bootstrap/logo.svg"></p>
 
 
-<h2 align="center"> TP deProgramación III - Backend</h2><br>
+<h2 align="center"> TP de Programación III - Backend</h2><br>
 
 
 _Trabajo práctico de Programación III, Ingeniería Infotmática, Universidad del CEMA._
