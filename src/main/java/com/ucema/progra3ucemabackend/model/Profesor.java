@@ -1,4 +1,4 @@
-package com.model;
+package com.ucema.progra3ucemabackend.model;
 
 import javax.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.model;
+package com.ucema.progra3ucemabackend.model;
 
 public class Muro {
     String id;
