@@ -1,8 +1,8 @@
-package src.main.java.com.model;
+package com.model;
 
 import java.time.LocalDate;
 
-public class Profesor extends User {
+public class Profesor extends Usuario {
     private LocalDate fechaIngreso;
 
     public Profesor(String username, String name, String email, String password) {

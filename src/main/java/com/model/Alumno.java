@@ -1,6 +1,6 @@
-package src.main.java.com.model;
+package com.model;
 
-public class Alumno extends User {
+public class Alumno extends Usuario {
     private String carrera;
     private String año;
 
