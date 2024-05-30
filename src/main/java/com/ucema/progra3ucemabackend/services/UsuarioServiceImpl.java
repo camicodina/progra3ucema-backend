@@ -34,9 +34,6 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     @Transactional
     public boolean deleteUsuario(Usuario usuario) {
-        if(usuario.tienePrestamos()) {
-            return false;
-        }
         try {
             usuarioRepository.delete(usuario);
             return true;
@@ -47,8 +44,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Usuario> getByDni(String dni) {
-        return this.usuarioRepository.findByDni(dni);
+    public Optional<Usuario> getByUsername(String username) {
+        return this.usuarioRepository.findByUsername(username);
     }
 }
 
