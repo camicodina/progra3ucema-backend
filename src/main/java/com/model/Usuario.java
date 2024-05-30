@@ -1,5 +1,14 @@
 package com.model;
 
+import javax.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+// JPA Entity for User
+@Entity
+@Table(name = "usuarios")
+
 public abstract class Usuario {
 
     private String username;
@@ -49,17 +58,49 @@ public abstract class Usuario {
         this.password = newPass;
     }
 
-    // Acciones 
-    public void Ingresar(){
 
+    @ManyToMany
+    @JoinTable(
+            name = "seguidores",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "seguidor_id")
+    )
+
+    private List<Usuario> siguiendo; // List of users this user is following
+
+    @ManyToMany(mappedBy = "siguiendo")
+    private List<Usuario> seguidores; // List of users following this user
+
+    
+
+    @Autowired
+    private PostRepository postRepository;
+
+        public void follow(Usuario usuarioASeguir) {
+            if (!siguiendo.contains(usuarioASeguir)) {
+                siguiendo.add(usuarioASeguir);
+                usuarioASeguir.seguidores.add(this);
+            }
+        }
+
+    public Post crearPost(String texto) {
+        Post nuevoPost = new Post(texto, this); 
+        postRepository.save(nuevoPost);
+        return nuevoPost;
     }
 
-    public void Follow(Etiqueta etiqueta){
-
+    public Optional<Usuario> verOtroPerfil(String username) {
+        // Retrieve user from database using Spring Data JPA
+        return userRepository.findByUsuario(username); 
     }
 
-    public void CrearPost(Post post){
+   
+
+    // Other methods 
+    public boolean ingresar() {
+        // Logic to validate and log in
     }
 
+  
 
 }
