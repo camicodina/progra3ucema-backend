@@ -1,8 +1,14 @@
 package com.ucema.progra3ucemabackend.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 // JPA Entity for User
@@ -11,60 +17,75 @@ import java.util.Optional;
 
 public abstract class Usuario {
 
+    @Id
+    @Column(name = "id_usuario")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
-    private String name;
-    private String email;
+
+    @Column(nullable = false)
     private String password;
 
-    public Usuario(String username, String name, String email, String password) {
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(length = 100)
+    private String email;
+
+
+    public Usuario(String username, String password, String name, String email) {
         this.username = username;
+        this.password = password;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
+
+    public Usuario() {}
+
 
     // Getters y Setters
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String newUsername) {
-        this.username = newUsername;
-    }
 
     public String getName() {
         return name;
     }
-
     public void setName(String newName) {
         this.name = newName;
     }
 
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String newEmail) {
         this.email = newEmail;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String newUsername) {
+        this.username = newUsername;
     }
 
     public String getPassword() {
         return password;
     }
-
-    public void setPass(String newPass) {
+    public void setPassword(String newPass) {
         this.password = newPass;
     }
 
+    public abstract String getRole();
 
-    @ManyToMany
-    @JoinTable(
-            name = "seguidores",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "seguidor_id")
-    )
+    public void setId(Long id) { this.id = id;}
+    public Long getId() { return id; }
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "seguidores",
+//            joinColumns = @JoinColumn(name = "usuario_id"),
+//            inverseJoinColumns = @JoinColumn(name = "seguidor_id")
+//    )
 
     private List<Usuario> siguiendo; // List of users this user is following
 
@@ -83,8 +104,8 @@ public abstract class Usuario {
             }
         }
 
-    public Post crearPost(String texto) {
-        Post nuevoPost = new Post(texto, this); 
+    public Post crearPost(String texto, Etiqueta etiqueta) {
+        Post nuevoPost = new Post(texto,this, etiqueta);
         postRepository.save(nuevoPost);
         return nuevoPost;
     }
@@ -94,13 +115,5 @@ public abstract class Usuario {
         return userRepository.findByUsuario(username); 
     }
 
-   
-
-    // Other methods 
-    public boolean ingresar() {
-        // Logic to validate and log in
-    }
-
-  
 
 }

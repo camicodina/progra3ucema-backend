@@ -1,27 +1,45 @@
 package com.ucema.progra3ucemabackend.services;
 
+import com.ucema.progra3ucemabackend.configuration.JwtUtilities;
+
 import com.ucema.progra3ucemabackend.model.Alumno;
 import com.ucema.progra3ucemabackend.model.Profesor;
 import com.ucema.progra3ucemabackend.model.Usuario;
 
+import com.ucema.progra3ucemabackend.repositories.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+
+@Service
 public class UsuarioServiceImpl implements UsuarioService{
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtilities jwtUtilities;
+
     @Override
     @Transactional
-    Alumno createAlumno(String username, String name, String email, String password, String carrera, String año){
-        Alumno alumno = new Alumno(username,name,email,password,carrera,año);
+    public Alumno createAlumno(Alumno alumno) {
+        alumno.setPassword(passwordEncoder.encode(alumno.getPassword()));
         return usuarioRepository.save(alumno);
     }
 
     @Override
     @Transactional
-    Profesor createProfesor(String username, String name, String email, String password){
-        Profesor profesor = new Profesor(username,name,email,password);
+    public Profesor createProfesor(Profesor profesor) {
+        profesor.setPassword(passwordEncoder.encode(profesor.getPassword()));
         return usuarioRepository.save(profesor);
     }
 
@@ -46,6 +64,26 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Transactional(readOnly = true)
     public Optional<Usuario> getByUsername(String username) {
         return this.usuarioRepository.findByUsername(username);
+    }
+
+    @Override
+    public String authenticate(String username, String password) {
+        Usuario user = this.usuarioRepository.findByUsername(username).orElse(null);
+        if (user == null) { return null; }
+        // Generar el token a retornar
+        String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
+        return token;
+
+        // ACLARACION: Solo estoy retornando el JWT, el usuario no esta actualmente autenticado
+        // por lo que si voy a realizar otra tarea debo generar el objeto correspondiente y
+        // agregarlo al contexto de Spring
+
+    }
+
+    @Override
+    public Usuario getUserInfo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return this.usuarioRepository.findByUsername(username).orElse(null);
     }
 }
 

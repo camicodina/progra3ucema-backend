@@ -1,15 +1,24 @@
 package com.ucema.progra3ucemabackend.model;
 
-import javax.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
+@Entity
 public class Profesor extends Usuario {
 
     public Profesor(String username, String name, String email, String password) {
         super(username, name, email, password);
     }
+
 
     public void BorrarPost(Post post){
         Optional<Post> postOptional = postRepository.findById(postId);
@@ -25,5 +34,19 @@ public class Profesor extends Usuario {
             throw new IllegalArgumentException("Post no encontrado");
         }
     }
+
+
+    @Override
+    public String getRole() {
+        return "PROFESOR";
+    }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("PROFESOR"));
+//        return authorities;
+//    }
+
 }
 

@@ -2,15 +2,21 @@ package com.ucema.progra3ucemabackend.services;
 
 import com.ucema.progra3ucemabackend.model.*;
 
+import java.util.Optional;
+
 public interface UsuarioService {
     
-    Alumno createAlumno(String username, String name, String email, String password, String carrera, String año);
+    Alumno createAlumno(Alumno alumno);
 
-    Profesor createProfesor(String username, String name, String email, String password);
+    Profesor createProfesor(Profesor profesor);
 
     Usuario updateUsuario(Usuario usuario);
 
     boolean deleteUsuario(Usuario usuario);
 
     Optional<Usuario> getByUsername(String username);
+
+    String authenticate(String username, String password);
+
+    Usuario getUserInfo();
 }

@@ -1,4 +1,4 @@
-package com.ucema.progra3.biblioteca.configuration;
+package com.ucema.progra3ucemabackend.configuration;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
