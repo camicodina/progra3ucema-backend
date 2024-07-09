@@ -5,8 +5,11 @@ import com.ucema.progra3ucemabackend.configuration.JwtUtilities;
 import com.ucema.progra3ucemabackend.model.Alumno;
 import com.ucema.progra3ucemabackend.model.Profesor;
 import com.ucema.progra3ucemabackend.model.Usuario;
+import com.ucema.progra3ucemabackend.model.Post;
+import com.ucema.progra3ucemabackend.model.Etiqueta;
 
 import com.ucema.progra3ucemabackend.repositories.UsuarioRepository;
+import com.ucema.progra3ucemabackend.repositories.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +21,7 @@ import java.util.Optional;
 
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -28,6 +31,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Autowired
     private JwtUtilities jwtUtilities;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     @Transactional
@@ -69,7 +75,9 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public String authenticate(String username, String password) {
         Usuario user = this.usuarioRepository.findByUsername(username).orElse(null);
-        if (user == null) { return null; }
+        if (user == null) {
+            return null;
+        }
         // Generar el token a retornar
         String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
         return token;
@@ -85,5 +93,10 @@ public class UsuarioServiceImpl implements UsuarioService{
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return this.usuarioRepository.findByUsername(username).orElse(null);
     }
+
+    public Optional<Usuario> verOtroPerfil(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
 }
 

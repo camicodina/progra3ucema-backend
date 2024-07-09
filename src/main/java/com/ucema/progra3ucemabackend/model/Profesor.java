@@ -20,7 +20,7 @@ public class Profesor extends Usuario {
     }
 
 
-    public void BorrarPost(Post post){
+    public void BorrarPost(Post postId){
         Optional<Post> postOptional = postRepository.findById(postId);
 
         if (postOptional.isPresent()) {

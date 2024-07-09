@@ -19,4 +19,6 @@ public interface UsuarioService {
     String authenticate(String username, String password);
 
     Usuario getUserInfo();
+
+    Optional<Usuario> verOtroPerfil(String username);
 }

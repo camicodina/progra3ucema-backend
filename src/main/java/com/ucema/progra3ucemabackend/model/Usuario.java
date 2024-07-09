@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "usuarios")
 
-public abstract class Usuario {
+public abstract class Usuario implements UserDetails {
 
     @Id
     @Column(name = "id_usuario")
@@ -33,6 +34,18 @@ public abstract class Usuario {
 
     @Column(length = 100)
     private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "seguidores",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "seguidor_id")
+    )
+    private List<Usuario> siguiendo = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "siguiendo")
+
+    private List<Usuario> seguidores = new ArrayList<>();
 
 
     public Usuario(String username, String password, String name, String email) {
@@ -77,43 +90,53 @@ public abstract class Usuario {
 
     public abstract String getRole();
 
+    public List<Usuario> getSiguiendo() {
+        return siguiendo;
+    }
+
+    public List<Usuario> getSeguidores() {
+        return seguidores;
+    }
+
     public void setId(Long id) { this.id = id;}
     public Long getId() { return id; }
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "seguidores",
-//            joinColumns = @JoinColumn(name = "usuario_id"),
-//            inverseJoinColumns = @JoinColumn(name = "seguidor_id")
-//    )
 
-    private List<Usuario> siguiendo; // List of users this user is following
 
-    @ManyToMany(mappedBy = "siguiendo")
-    private List<Usuario> seguidores; // List of users following this user
-
-    
-
-    @Autowired
-    private PostRepository postRepository;
-
-        public void follow(Usuario usuarioASeguir) {
-            if (!siguiendo.contains(usuarioASeguir)) {
-                siguiendo.add(usuarioASeguir);
-                usuarioASeguir.seguidores.add(this);
-            }
+    public void follow(Usuario usuarioASeguir) {
+        if (!siguiendo.contains(usuarioASeguir)) {
+            siguiendo.add(usuarioASeguir);
+               usuarioASeguir.seguidores.add(this);
         }
-
-    public Post crearPost(String texto, Etiqueta etiqueta) {
-        Post nuevoPost = new Post(texto,this, etiqueta);
-        postRepository.save(nuevoPost);
-        return nuevoPost;
     }
 
-    public Optional<Usuario> verOtroPerfil(String username) {
-        // Retrieve user from database using Spring Data JPA
-        return userRepository.findByUsuario(username); 
+    // Implementación de UserDetails
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(getRole()));
+        return authorities;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
