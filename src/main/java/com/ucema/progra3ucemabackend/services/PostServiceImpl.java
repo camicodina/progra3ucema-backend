@@ -1,14 +1,15 @@
 package com.ucema.progra3ucemabackend.services;
 
-import com.ucema.progra3ucemabackend.model.Usuario;
 import com.ucema.progra3ucemabackend.model.Post;
 import com.ucema.progra3ucemabackend.model.Etiqueta;
+import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PostServiceImpl implements PostService {
 
@@ -17,8 +18,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post crearPost(String texto, Usuario usuario, Etiqueta etiqueta) {
-        Post nuevoPost = new Post(texto, usuario, etiqueta);
+        Post nuevoPost = new Post(texto, usuario, List.of(etiqueta));
         return postRepository.save(nuevoPost);
+    }
+
+    @Override
+    public void borrarPost(Post post) {
+        postRepository.delete(post);
     }
 
     @Override
@@ -35,4 +41,10 @@ public class PostServiceImpl implements PostService {
     public List<Post> obtenerPostsRecientes() {
         return postRepository.findTop10ByOrderByFechaCreacionDesc();
     }
+
+    @Override
+    public Optional<Post> obtenerPostPorId(Long id) {
+        return postRepository.findById(id);
+    }
+
 }
