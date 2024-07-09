@@ -1,4 +1,4 @@
-package com.ucema.progra3.biblioteca.configuration;
+package com.ucema.progra3ucemabackend.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

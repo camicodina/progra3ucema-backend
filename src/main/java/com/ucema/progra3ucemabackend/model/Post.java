@@ -1,12 +1,9 @@
 package com.ucema.progra3ucemabackend.model;
 
 import jakarta.persistence.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Table(name = "posts")
@@ -14,27 +11,43 @@ import java.util.Optional;
 public class Post {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_post")
     private Long id;
 
-    @Column(name = "texto")
+    @Column(name = "texto", nullable = false)
     private String texto;
 
-    @Column(name = "autor")
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario autor;
 
-    @Column(name = "etiqueta")
-    private Etiqueta etiqueta;
+    @ManyToMany
+    @JoinTable(
+            name = "post_etiqueta",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
+    )
+    private List<Etiqueta> etiquetas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "posts")
-    private List<Usuario> likes; //List of people who liked the post
+    @ManyToMany
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private List<Usuario> likes = new ArrayList<>();
+
+    @Column(name = "fecha_creacion", nullable = false)
+
+    private Date fechaCreacion = new Date();
 
 
-    public Post(String texto, Usuario autor, Etiqueta etiqueta) {
+    public Post(String texto, Usuario autor, List<Etiqueta> etiquetas) {
         this.texto = texto;
         this.autor = autor;
-        this.etiqueta = etiqueta;
+        this.etiquetas = etiquetas;
+        this.fechaCreacion = new Date();
         this.likes = new ArrayList<>();
     }
 
@@ -42,11 +55,11 @@ public class Post {
 
     //Getters & Setters
 
-    public Long getId() { return id;}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Usuario getAutor() {
-        return autor;
-    }
+    public Usuario getAutor() { return autor; }
+    public void setAutor(Usuario autor) { this.autor = autor; }
 
     public String getTexto() {
         return texto;
@@ -55,15 +68,37 @@ public class Post {
         this.texto = newTexto;
     }
 
-    public Etiqueta getEtiqueta() {
-        return etiqueta;
+    public List<Etiqueta> getEtiquetas() {
+        return etiquetas;
     }
-    public void setEtiqueta(Etiqueta newEtiqueta) {
-        this.etiqueta = newEtiqueta;
+    public void setEtiquetas(List<Etiqueta> etiquetas) { this.etiquetas = etiquetas; }
+
+    public List<Usuario> getLikes() { return likes; }
+    public void setLikes(List<Usuario> likes) { this.likes = likes; }
+
+    public Date getFechaCreacion() { return fechaCreacion; }
+
+    public void setFechaCreacion(Date fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    // Métodos para manejar likes y etiquetas
+
+    public void addLike(Usuario usuario) {
+        this.likes.add(usuario);
     }
 
-    public List<Usuario> getLikes() { return likes;}
-    public void setLikes(List<Usuario> newLikes) { this.likes = newLikes; }
+    public void removeLike(Usuario usuario) {
+        this.likes.remove(usuario);
+    }
+
+    public void addEtiqueta(Etiqueta etiqueta) {
+        this.etiquetas.add(etiqueta);
+        etiqueta.getPosts().add(this);
+    }
+
+    public void removeEtiqueta(Etiqueta etiqueta) {
+        this.etiquetas.remove(etiqueta);
+        etiqueta.getPosts().remove(this);
+    }
 
 }
 
