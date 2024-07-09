@@ -1,19 +1,18 @@
 package com.ucema.progra3ucemabackend.model;
 
 import jakarta.persistence.*;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
+@Table(name = "alumnos")
 public class Alumno extends Usuario {
+
     private String carrera;
     private String año;
 
@@ -21,6 +20,9 @@ public class Alumno extends Usuario {
         super(username, name, email, password);
         this.carrera = carrera;
         this.año = año;
+    }
+
+    public Alumno() {
     }
 
     public String getCarrera() {
@@ -44,13 +46,6 @@ public class Alumno extends Usuario {
     public String getRole() {
         return "ALUMNO";
     }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority("ALUMNO"));
-//        return authorities;
-//    }
 
 }
 

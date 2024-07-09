@@ -73,18 +73,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Optional<Usuario> obtenerUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
+    @Override
     public String authenticate(String username, String password) {
-        Usuario user = this.usuarioRepository.findByUsername(username).orElse(null);
+        Usuario user = usuarioRepository.findByUsername(username).orElse(null);
+
         if (user == null) {
             return null;
         }
-        // Generar el token a retornar
-        String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
-        return token;
 
-        // ACLARACION: Solo estoy retornando el JWT, el usuario no esta actualmente autenticado
-        // por lo que si voy a realizar otra tarea debo generar el objeto correspondiente y
-        // agregarlo al contexto de Spring
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return null;
+        }
+
+        // Generar el token a retornar
+        return jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
 
     }
 
