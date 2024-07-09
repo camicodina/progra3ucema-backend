@@ -3,8 +3,11 @@ package com.ucema.progra3ucemabackend.controllers;
 import com.ucema.progra3ucemabackend.model.Post;
 import com.ucema.progra3ucemabackend.model.Etiqueta;
 import com.ucema.progra3ucemabackend.model.Usuario;
+
+import com.ucema.progra3ucemabackend.services.EtiquetaService;
 import com.ucema.progra3ucemabackend.services.PostService;
 import com.ucema.progra3ucemabackend.services.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,9 @@ public class PostController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EtiquetaService etiquetaService;
 
     @PostMapping("/create")
     public Post crearPost(@RequestBody String texto, @RequestBody String username, @RequestBody Long etiquetaId) {
@@ -46,5 +52,10 @@ public class PostController {
         return postService.obtenerPostsRecientes();
     }
 
+    @DeleteMapping("/{postId}")
+    public void borrarPost(@PathVariable Long postId) {
+        Post post = postService.obtenerPostPorId(postId).orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        postService.borrarPost(post);
+    }
 
 }
