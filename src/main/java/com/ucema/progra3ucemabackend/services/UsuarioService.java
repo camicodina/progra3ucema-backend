@@ -7,7 +7,6 @@ import java.util.Optional;
 public interface UsuarioService {
     
     Alumno createAlumno(Alumno alumno);
-
     Profesor createProfesor(Profesor profesor);
 
     Usuario updateUsuario(Usuario usuario);
@@ -15,6 +14,7 @@ public interface UsuarioService {
     boolean deleteUsuario(Usuario usuario);
 
     Optional<Usuario> getByUsername(String username);
+    Optional<Usuario> obtenerUsuarioPorId(Long id);
 
     String authenticate(String username, String password);
 
