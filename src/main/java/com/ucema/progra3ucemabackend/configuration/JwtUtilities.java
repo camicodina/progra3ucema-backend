@@ -11,12 +11,15 @@ import org.springframework.util.StringUtils;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class JwtUtilities {
 
     private final String secret = "2b44b0b00fd822d8ce753e54dac3dc4e06c2725f7db930f3b9924468b53194dbccdbe23d7baa5ef5fbc414ca4b2e64700bad60c5a7c45eaba56880985582fba4";
-    private final Long expiration = 3600l;
+    private Long expiration = 3600L;
+    private final Set<String> invalidTokens = new HashSet<>();  // Lista de tokens inválidos
 
     public String generateToken(String username, Long id, String rol) {
         return Jwts.builder()
@@ -31,7 +34,7 @@ public class JwtUtilities {
     public String getToken(HttpServletRequest httpServletRequest) {
         String barrerToken = httpServletRequest.getHeader("Authorization"); //Obtiene el contenido del Authorization Header
         if(StringUtils.hasText(barrerToken) && barrerToken.startsWith("Bearer ")) { // Verifica que sea un token JWT
-            return barrerToken.substring(7, barrerToken.length()); //Obtiene la cadena del token.
+            return barrerToken.substring(7); //Obtiene la cadena del token.
         }
         return null;
     }
@@ -40,13 +43,19 @@ public class JwtUtilities {
         try {
             // Si puedo obtener las claims entonces el token es valido
             Jws<Claims> claimsJws =  Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            if(isTokenExpired(token)) { return false; } // Verfica que no haya expirado.
-            return true;
+            // Verfica que no haya expirado.
+            return !isTokenExpired(token);
         } catch (Exception e) {
             // Si el token no es valido, puedo realizar alguna acción
         }
         return false;
     }
+
+    public void invalidateToken(String token) {
+        invalidTokens.add(token);  // Añadir el token a la lista de tokens inválidos
+    }
+
+    // Extracts
 
     public Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();

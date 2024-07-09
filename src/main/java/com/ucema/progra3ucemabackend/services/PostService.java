@@ -16,5 +16,4 @@ public interface PostService {
     List<Post> obtenerPostsPorEtiqueta(Etiqueta etiqueta);
     List<Post> obtenerPostsRecientes();
     Optional<Post> obtenerPostPorId(Long id);
-
 }

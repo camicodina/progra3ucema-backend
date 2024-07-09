@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> obtenerPostsRecientes() {
-        return postRepository.findTop10ByOrderByFechaCreacionDesc();
+        return postRepository.findTop30ByOrderByFechaCreacionDesc();
     }
 
     @Override

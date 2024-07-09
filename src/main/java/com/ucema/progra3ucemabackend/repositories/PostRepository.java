@@ -15,7 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByEtiqueta(Etiqueta etiqueta);
 
-    List<Post> findTop10ByOrderByFechaCreacionDesc();
+    List<Post> findTop30ByOrderByFechaCreacionDesc();
 
 
 }
