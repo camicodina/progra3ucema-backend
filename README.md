@@ -25,16 +25,41 @@ Funcionalidades:
 - Crear, borrar y listar posts asociados a etiquetas.
 
 Diagrama de clases:
-<p align="center"><img width=100% src="images/Backend - TP Programación 3.drawio.png"></p>
+<p align="center"><img width=70% src="images/Backend - TP Programación 3.drawio.png"></p>
 
 
 ## Modo de Uso 📝
-Comandos de compilación y ejecución:
+
+Paso 1: Compilar el Proyecto
+> $ mvn clean install
+
+Paso 2: Ejecutar la Aplicación
+> $ mvn spring-boot:run
+
+o bien:
 > $ java -jar progra3ucemabackend.jar
 
+Paso 3: Verificar la Ejecución
+Si todo está configurado correctamente, el siguiente mensaje aparecerá en la consola:
+> Progra3ucemaBackendApplication started
 
 ## Instrucciones 🦆
+Esta aplicación fue creada con un set de datos de prueba iniciales.
 
+Podemos validar que los datos de prueba se han creado correctamente de las siguientes formas:
+- Verificar en la Base de Datos: Accede a tu base de datos MySQL y verifica que las tablas
+- Consultar los Endpoints: usando Postman o ejecutando comandos CURL podemos realizar solicitudes HTTP a la API
+
+```shell
+# Obtener todos los posts
+curl -X GET http://localhost:8081/api/muro/posts
+
+# Obtener el perfil de un usuario
+curl -X GET http://localhost:8081/api/muro/perfil/alumno1
+
+# Obtener posts de un usuario específico
+curl -X GET http://localhost:8081/api/muro/posts/alumno1
+```
 
 ## Contruido con... ⚙
 - Java (Spring)
