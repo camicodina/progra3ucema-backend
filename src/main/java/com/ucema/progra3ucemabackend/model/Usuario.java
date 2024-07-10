@@ -11,8 +11,7 @@ import java.util.List;
 
 // JPA Entity for User
 @Entity
-@Table(name = "usuarios")
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Usuario implements UserDetails {
 
     @Id

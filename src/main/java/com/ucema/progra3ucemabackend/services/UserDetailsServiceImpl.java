@@ -26,8 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(optionalUsuario.isEmpty()) {
             throw new UsernameNotFoundException("Usuario no encontrado: " + username);
         } else {
-            Usuario usuario = optionalUsuario.get();
-            return usuario;
+            return optionalUsuario.get();
         }
 
     }

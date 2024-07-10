@@ -7,7 +7,9 @@ import com.ucema.progra3ucemabackend.services.EtiquetaService;
 import com.ucema.progra3ucemabackend.services.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,13 +25,13 @@ public class EtiquetaController {
 
     // POST ../api/etiquetas
     @PostMapping("")
-    public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam String username) {
-        Usuario usuario = usuarioService.getByUsername(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        if (!"PROFESOR".equals(usuario.getRole())) {
-            throw new RuntimeException("Solo los profesores pueden crear etiquetas");
+    public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam Usuario usuario) {
+        if (usuario.getId() == null ) { throw new RuntimeException("Usuario no encontrado"); }
+        try {
+            return etiquetaService.crearEtiqueta(nombre, usuario);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return etiquetaService.crearEtiqueta(nombre);
     }
 
     @GetMapping("/{id}")

@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PostService {
 
     Post crearPost(String texto, Usuario usuario, Etiqueta etiqueta);
-    void borrarPost(Post post);
+    void borrarPost(Post post, Usuario borrador);
 
     void darLike(Post post);
     void quitarLike(Post post);

@@ -1,6 +1,7 @@
 package com.ucema.progra3ucemabackend.services;
 
 import com.ucema.progra3ucemabackend.model.Etiqueta;
+import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.repositories.EtiquetaRepository;
 
@@ -17,7 +18,17 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     private EtiquetaRepository etiquetaRepository;
 
     @Override
-    public Etiqueta crearEtiqueta(String nombre) {
+    public Etiqueta crearEtiqueta(String nombre, Usuario usuario) {
+        if (!"PROFESOR".equals(usuario.getRole())) {
+            throw new RuntimeException("Solo los profesores pueden crear etiquetas");
+        }
+
+        // Verificar si ya existe una etiqueta con el mismo nombre
+        Optional<Etiqueta> etiquetaExistente = etiquetaRepository.findByNombre(nombre);
+        if (etiquetaExistente.isPresent()) {
+            throw new RuntimeException("Ya existe una etiqueta con este nombre");
+        }
+
         Etiqueta etiqueta = new Etiqueta(nombre);
         return etiquetaRepository.save(etiqueta);
     }
