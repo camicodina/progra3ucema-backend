@@ -1,9 +1,7 @@
 package com.ucema.progra3ucemabackend.model;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -15,40 +13,31 @@ public class Post {
     @Column(name = "id_post")
     private Long id;
 
-    @Column(name = "texto", nullable = false)
+    @Column(nullable = false)
     private String texto;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario autor;
+    private Usuario usuario;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_etiqueta",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
-    )
-    private List<Etiqueta> etiquetas = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "etiqueta_id", nullable = true) // Hace la etiqueta opcional
+    private Etiqueta etiqueta;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_likes",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
-    private List<Usuario> likes = new ArrayList<>();
+    @Column(name = "likes")
+    private int likes;
+
 
     @Column(name = "fecha_creacion", nullable = false)
-
     private Date fechaCreacion = new Date();
 
 
-    public Post(String texto, Usuario autor, List<Etiqueta> etiquetas) {
+    public Post(String texto, Usuario usuario, Etiqueta etiqueta) {
         this.texto = texto;
-        this.autor = autor;
-        this.etiquetas = etiquetas;
+        this.usuario = usuario;
+        this.etiqueta = etiqueta;
         this.fechaCreacion = new Date();
-        this.likes = new ArrayList<>();
+        this.likes = 0;
     }
 
     public Post() {}
@@ -58,47 +47,34 @@ public class Post {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Usuario getAutor() { return autor; }
-    public void setAutor(Usuario autor) { this.autor = autor; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
     public String getTexto() {
         return texto;
     }
-    public void setTexto(String newTexto) {
-        this.texto = newTexto;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
-
-    public List<Etiqueta> getEtiquetas() {
-        return etiquetas;
-    }
-    public void setEtiquetas(List<Etiqueta> etiquetas) { this.etiquetas = etiquetas; }
-
-    public List<Usuario> getLikes() { return likes; }
-    public void setLikes(List<Usuario> likes) { this.likes = likes; }
 
     public Date getFechaCreacion() { return fechaCreacion; }
-
     public void setFechaCreacion(Date fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Etiqueta getEtiqueta() { return etiqueta;}
+    public void setEtiqueta(Etiqueta etiqueta) { this.etiqueta = etiqueta; }
+
+    public int getLikes() { return likes; }
+    public void setLikes(int likes) { this.likes = likes; }
+
 
     // Métodos para manejar likes y etiquetas
 
-    public void addLike(Usuario usuario) {
-        this.likes.add(usuario);
+    public void incrementarLikes() { this.likes++; }
+
+    public void decrementarLikes() {
+        if (this.likes > 0) { this.likes--; }
     }
 
-    public void removeLike(Usuario usuario) {
-        this.likes.remove(usuario);
-    }
-
-    public void addEtiqueta(Etiqueta etiqueta) {
-        this.etiquetas.add(etiqueta);
-        etiqueta.getPosts().add(this);
-    }
-
-    public void removeEtiqueta(Etiqueta etiqueta) {
-        this.etiquetas.remove(etiqueta);
-        etiqueta.getPosts().remove(this);
-    }
 
 }
 

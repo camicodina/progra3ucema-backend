@@ -4,9 +4,9 @@ import com.ucema.progra3ucemabackend.model.Post;
 import com.ucema.progra3ucemabackend.model.Etiqueta;
 import com.ucema.progra3ucemabackend.model.Usuario;
 
-import com.ucema.progra3ucemabackend.services.EtiquetaService;
 import com.ucema.progra3ucemabackend.services.PostService;
 import com.ucema.progra3ucemabackend.services.UsuarioService;
+import com.ucema.progra3ucemabackend.services.EtiquetaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +26,20 @@ public class PostController {
     @Autowired
     private EtiquetaService etiquetaService;
 
-    @PostMapping("/create")
-    public Post crearPost(@RequestBody String texto, @RequestBody String username, @RequestBody Long etiquetaId) {
+    // POST ../api/posts
+    @PostMapping("")
+    public Post crearPost(@RequestParam String texto, @RequestParam String username, @RequestParam(required = false) Long etiquetaId) {
         Usuario usuario = usuarioService.getByUsername(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        Etiqueta etiqueta = new Etiqueta();
-        etiqueta.setId(etiquetaId);
+        Etiqueta etiqueta = etiquetaId != null ? etiquetaService.obtenerEtiquetaPorId(etiquetaId) : null;
         return postService.crearPost(texto, usuario, etiqueta);
     }
+
+    @DeleteMapping("/{postId}")
+    public void borrarPost(@PathVariable Long postId) {
+        Post post = postService.obtenerPostPorId(postId).orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        postService.borrarPost(post);
+    }
+
 
     @GetMapping("/user/{username}")
     public List<Post> obtenerPostsPorUsuario(@PathVariable String username) {
@@ -42,8 +49,7 @@ public class PostController {
 
     @GetMapping("/etiqueta/{etiquetaId}")
     public List<Post> obtenerPostsPorEtiqueta(@PathVariable Long etiquetaId) {
-        Etiqueta etiqueta = new Etiqueta(); // Suponiendo que tienes un método para obtener la etiqueta por ID
-        etiqueta.setId(etiquetaId);
+        Etiqueta etiqueta = etiquetaService.obtenerEtiquetaPorId(etiquetaId);
         return postService.obtenerPostsPorEtiqueta(etiqueta);
     }
 
@@ -52,10 +58,16 @@ public class PostController {
         return postService.obtenerPostsRecientes();
     }
 
-    @DeleteMapping("/{postId}")
-    public void borrarPost(@PathVariable Long postId) {
-        Post post = postService.obtenerPostPorId(postId).orElseThrow(() -> new RuntimeException("Post no encontrado"));
-        postService.borrarPost(post);
+    @PostMapping("/{id}")
+    public void darLike(@PathVariable Long id) {
+        Post post = postService.obtenerPostPorId(id).orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        postService.darLike(post);
+    }
+
+    @PostMapping("/{id}")
+    public void quitarLike(@PathVariable Long id) {
+        Post post = postService.obtenerPostPorId(id).orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        postService.quitarLike(post);
     }
 
 }

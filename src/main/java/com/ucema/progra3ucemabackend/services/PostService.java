@@ -12,6 +12,9 @@ public interface PostService {
     Post crearPost(String texto, Usuario usuario, Etiqueta etiqueta);
     void borrarPost(Post post);
 
+    void darLike(Post post);
+    void quitarLike(Post post);
+
     List<Post> obtenerPostsPorUsuario(Usuario usuario);
     List<Post> obtenerPostsPorEtiqueta(Etiqueta etiqueta);
     List<Post> obtenerPostsRecientes();

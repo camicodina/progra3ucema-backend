@@ -20,13 +20,8 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     }
 
     @Override
-    public Optional<Etiqueta> obtenerEtiquetaPorId(Long id) {
-        return etiquetaRepository.findById(id);
-    }
-
-    @Override
-    public List<Etiqueta> obtenerTodasLasEtiquetas() {
-        return etiquetaRepository.findAll();
+    public Etiqueta obtenerEtiquetaPorId(Long id) {
+        return etiquetaRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -35,8 +30,8 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     }
 
     @Override
-    public List<Etiqueta> obtenerEtiquetasPorIds(List<Long> ids) {
-        return etiquetaRepository.findAllById(ids);
+    public List<Etiqueta> obtenerTodasLasEtiquetas() {
+        return etiquetaRepository.findAll();
     }
 
 }

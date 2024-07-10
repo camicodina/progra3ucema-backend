@@ -6,7 +6,6 @@ import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +17,25 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post crearPost(String texto, Usuario usuario, Etiqueta etiqueta) {
-        Post nuevoPost = new Post(texto, usuario, List.of(etiqueta));
+        Post nuevoPost = new Post(texto, usuario, etiqueta);
         return postRepository.save(nuevoPost);
     }
 
     @Override
     public void borrarPost(Post post) {
         postRepository.delete(post);
+    }
+
+    @Override
+    public void darLike(Post post) {
+        post.incrementarLikes();
+        postRepository.save(post);
+    }
+
+    @Override
+    public void quitarLike(Post post) {
+        post.decrementarLikes();
+        postRepository.save(post);
     }
 
     @Override
