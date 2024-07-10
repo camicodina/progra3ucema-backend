@@ -2,7 +2,6 @@ package com.ucema.progra3ucemabackend.controllers;
 
 import com.ucema.progra3ucemabackend.model.Etiqueta;
 import com.ucema.progra3ucemabackend.model.Usuario;
-import com.ucema.progra3ucemabackend.model.Profesor;
 
 import com.ucema.progra3ucemabackend.services.EtiquetaService;
 import com.ucema.progra3ucemabackend.services.UsuarioService;
@@ -26,7 +25,8 @@ public class EtiquetaController {
     @PostMapping("")
     public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam String username) {
         Usuario usuario = usuarioService.getByUsername(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        if (!(usuario instanceof Profesor)) {
+
+        if (!"PROFESOR".equals(usuario.getRole())) {
             throw new RuntimeException("Solo los profesores pueden crear etiquetas");
         }
         return etiquetaService.crearEtiqueta(nombre);
@@ -44,7 +44,7 @@ public class EtiquetaController {
         return etiquetaService.obtenerTodasLasEtiquetas();
     }
 
-    @GetMapping("/{nombre}")
+    @GetMapping("/nombre/{nombre}")
     public Etiqueta obtenerEtiquetaPorNombre(@PathVariable String nombre) {
         return etiquetaService.obtenerEtiquetaPorNombre(nombre).orElseThrow(() -> new RuntimeException("Etiqueta no encontrada"));
     }

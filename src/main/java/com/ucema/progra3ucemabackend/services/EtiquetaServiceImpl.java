@@ -1,13 +1,16 @@
 package com.ucema.progra3ucemabackend.services;
 
 import com.ucema.progra3ucemabackend.model.Etiqueta;
+
 import com.ucema.progra3ucemabackend.repositories.EtiquetaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EtiquetaServiceImpl implements EtiquetaService {
 
     @Autowired
