@@ -8,9 +8,8 @@ public interface EtiquetaService {
 
     Etiqueta crearEtiqueta(String nombre);
 
-    Optional<Etiqueta> obtenerEtiquetaPorId(Long id);
-    List<Etiqueta> obtenerTodasLasEtiquetas();
     Optional<Etiqueta> obtenerEtiquetaPorNombre(String nombre);
+    Etiqueta obtenerEtiquetaPorId(Long id);
 
-    List<Etiqueta> obtenerEtiquetasPorIds(List<Long> ids);
+    List<Etiqueta> obtenerTodasLasEtiquetas();
 }
