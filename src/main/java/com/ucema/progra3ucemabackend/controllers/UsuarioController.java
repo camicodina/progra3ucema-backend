@@ -68,12 +68,12 @@ public class UsuarioController {
     }
 
 
-    @GetMapping("/username/{username}")
+    @GetMapping("/perfil/{username}")
     public Optional<Usuario> verOtroPerfil(@PathVariable String username) {
         return usuarioService.verOtroPerfil(username);
     }
 
-    @PostMapping("/{followerId}")
+    @PostMapping("/{IdSeguidor}/follow/{IdSeguido}")
     public void follow(@PathVariable Long IdSeguidor, @PathVariable Long IdSeguido) {
         usuarioService.follow(IdSeguidor, IdSeguido);
     }

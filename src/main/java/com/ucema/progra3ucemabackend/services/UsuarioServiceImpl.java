@@ -7,7 +7,6 @@ import com.ucema.progra3ucemabackend.model.Profesor;
 import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.repositories.UsuarioRepository;
-import com.ucema.progra3ucemabackend.repositories.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,8 +29,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private JwtUtilities jwtUtilities;
 
-    @Autowired
-    private PostRepository postRepository;
 
     @Override
     @Transactional

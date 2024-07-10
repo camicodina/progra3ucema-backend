@@ -37,6 +37,12 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public void borrarPost(@PathVariable Long postId) {
         Post post = postService.obtenerPostPorId(postId).orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        Usuario usuario = post.getUsuario();
+        if (usuario == null) { throw new RuntimeException("Usuario no encontrado"); }
+
+        if (!"PROFESOR".equals(usuario.getRole())) {
+            throw new RuntimeException("Solo los profesores pueden borrar posts");
+        }
         postService.borrarPost(post);
     }
 
@@ -58,13 +64,13 @@ public class PostController {
         return postService.obtenerPostsRecientes();
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/like")
     public void darLike(@PathVariable Long id) {
         Post post = postService.obtenerPostPorId(id).orElseThrow(() -> new RuntimeException("Post no encontrado"));
         postService.darLike(post);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/unlike")
     public void quitarLike(@PathVariable Long id) {
         Post post = postService.obtenerPostPorId(id).orElseThrow(() -> new RuntimeException("Post no encontrado"));
         postService.quitarLike(post);
