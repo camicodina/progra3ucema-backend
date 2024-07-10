@@ -15,8 +15,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Arrays;
-
 @SpringBootApplication
 public class Progra3ucemaBackendApplication {
 
@@ -29,9 +27,9 @@ public class Progra3ucemaBackendApplication {
 						   @Autowired PostService postService,
 						   @Autowired EtiquetaService etiquetaService) {
 		return (args) -> {
-			Alumno alumno1 = usuarioService.createAlumno(new Alumno("alumno1", "Javier", "alumno1@gmail.com", "1234", "Ingenieria", "1er año"));
-			Alumno alumno2 = usuarioService.createAlumno(new Alumno("alumno2", "Isabella", "alumno2@gmail.com", "1234", "Economia", "2do año"));
-			Profesor profesor1 = usuarioService.createProfesor(new Profesor("profesor1", "Carlos", "profesor1@gmail.com", "1234"));
+			Alumno alumno1 = usuarioService.crearAlumno(new Alumno("alumno1", "Javier", "alumno1@gmail.com", "1234", "Ingenieria", "1er año"));
+			Alumno alumno2 = usuarioService.crearAlumno(new Alumno("alumno2", "Isabella", "alumno2@gmail.com", "1234", "Economia", "2do año"));
+			Profesor profesor1 = usuarioService.crearProfesor(new Profesor("profesor1", "Carlos", "profesor1@gmail.com", "1234"));
 
 			Etiqueta etiqueta1 = etiquetaService.crearEtiqueta("Spring");
 			Etiqueta etiqueta2 = etiquetaService.crearEtiqueta("Java");

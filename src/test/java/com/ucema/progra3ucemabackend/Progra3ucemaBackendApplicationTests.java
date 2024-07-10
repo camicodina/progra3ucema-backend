@@ -47,14 +47,14 @@ class Progra3ucemaBackendApplicationTests {
 //	void createAndGetEntitiesTest() {
 //
 //		// Crear y verificar Alumnos
-//		Alumno alumno1 = usuarioService.createAlumno(new Alumno("alumno1", "Javier", "alumno1@gmail.com", "1234", "Ingenieria", "1er año"));
+//		Alumno alumno1 = usuarioService.crearAlumno(new Alumno("alumno1", "Javier", "alumno1@gmail.com", "1234", "Ingenieria", "1er año"));
 //		Assert.notNull(alumno1.getId(), "No se ha asignado un id al alumno1");
 //
-//		Alumno alumno2 = usuarioService.createAlumno(new Alumno("alumno2", "Isabella", "alumno2@gmail.com", "1234", "Economia", "2do año"));
+//		Alumno alumno2 = usuarioService.crearAlumno(new Alumno("alumno2", "Isabella", "alumno2@gmail.com", "1234", "Economia", "2do año"));
 //		Assert.notNull(alumno2.getId(), "No se ha asignado un id al alumno2");
 //
 //		// Crear y verificar Profesor
-//		Profesor profesor1 = usuarioService.createProfesor(new Profesor("profesor1", "Carlos", "profesor1@gmail.com", "1234"));
+//		Profesor profesor1 = usuarioService.crearProfesor(new Profesor("profesor1", "Carlos", "profesor1@gmail.com", "1234"));
 //		Assert.notNull(profesor1.getId(), "No se ha asignado un id al profesor1");
 //
 //		// Crear y verificar Etiquetas

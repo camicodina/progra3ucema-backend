@@ -5,6 +5,11 @@ import com.ucema.progra3ucemabackend.repositories.PostRepository;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,11 +23,21 @@ public class Profesor extends Usuario {
         super(username, name, email, password);
     }
 
+    // Implementación de GrantedAuthority
+
     @Override
     public String getRole() {
         return "PROFESOR";
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("PROFESOR"));
+        return authorities;
+    }
+
+    // Métodos adicionales
     public void borrarPost(Post post, PostRepository postRepository) {
         postRepository.delete(post);
     }

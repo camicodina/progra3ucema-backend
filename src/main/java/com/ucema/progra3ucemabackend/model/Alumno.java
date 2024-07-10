@@ -1,9 +1,9 @@
 package com.ucema.progra3ucemabackend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,13 +22,13 @@ public class Alumno extends Usuario {
         this.año = año;
     }
 
-    public Alumno() {
-    }
+    public Alumno() {}
+
+    // Getters & Setters
 
     public String getCarrera() {
         return carrera;
     }
-
     public void setCarrera(String carrera) {
         this.carrera = carrera;
     }
@@ -36,15 +36,23 @@ public class Alumno extends Usuario {
     public String getAño() {
         return año;
     }
-
     public void setAño(String año) {
         this.año = año;
     }
 
 
+    // Implementación de GrantedAuthority
+
     @Override
     public String getRole() {
         return "ALUMNO";
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ALUMNO"));
+        return authorities;
     }
 
 }

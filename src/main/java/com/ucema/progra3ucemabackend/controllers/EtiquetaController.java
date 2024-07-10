@@ -22,8 +22,8 @@ public class EtiquetaController {
     @Autowired
     private UsuarioService usuarioService;
 
-
-    @PostMapping("/create")
+    // POST ../api/etiquetas
+    @PostMapping("")
     public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam String username) {
         Usuario usuario = usuarioService.getByUsername(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         if (!(usuario instanceof Profesor)) {
@@ -39,12 +39,12 @@ public class EtiquetaController {
         return etiqueta;
     }
 
-    @GetMapping("/todas")
+    @GetMapping("")
     public List<Etiqueta> obtenerTodasLasEtiquetas() {
         return etiquetaService.obtenerTodasLasEtiquetas();
     }
 
-    @GetMapping("/nombre/{nombre}")
+    @GetMapping("/{nombre}")
     public Etiqueta obtenerEtiquetaPorNombre(@PathVariable String nombre) {
         return etiquetaService.obtenerEtiquetaPorNombre(nombre).orElseThrow(() -> new RuntimeException("Etiqueta no encontrada"));
     }
