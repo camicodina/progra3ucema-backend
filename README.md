@@ -8,16 +8,6 @@ _Trabajo práctico de Programación III, Ingeniería Infotmática, Universidad d
 > [Link al repositorio de Github](https://github.com/camicodina/progra3ucema-backend)
 
 
-## **Content Table**
-
-- [Objetivos](#Objetivos)
-- [El desarrollo](#El-desarrollo)
-- [Modo de Uso](#Modo-de-Uso)
-- [Instrucciones](#Instrucciones)
-- [Tecnologias](#Tecnologias)
-- [Detalles Adicionales](#Detalles-adicionales)
-
-
 ## **Objetivos** 📌
 El objetivo de este trabajo es crear un desarrollo web completo, que comprende:
 
