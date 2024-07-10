@@ -1,7 +1,6 @@
 package com.ucema.progra3ucemabackend.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "etiquetas")
@@ -20,7 +19,7 @@ public class Etiqueta {
     public Etiqueta() {}
 
     public Etiqueta(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre; 
     }
 
 
