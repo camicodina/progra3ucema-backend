@@ -35,15 +35,10 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public void borrarPost(@PathVariable Long postId) {
+    public void borrarPost(@PathVariable Long postId, @RequestParam Usuario borrador) {
         Post post = postService.obtenerPostPorId(postId).orElseThrow(() -> new RuntimeException("Post no encontrado"));
-        Usuario usuario = post.getUsuario();
-        if (usuario == null) { throw new RuntimeException("Usuario no encontrado"); }
-
-        if (!"PROFESOR".equals(usuario.getRole())) {
-            throw new RuntimeException("Solo los profesores pueden borrar posts");
-        }
-        postService.borrarPost(post);
+        if (borrador.getId() == null ) { throw new RuntimeException("Usuario no encontrado"); }
+        postService.borrarPost(post,borrador);
     }
 
 

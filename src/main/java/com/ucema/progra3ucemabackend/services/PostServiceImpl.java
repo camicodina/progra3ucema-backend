@@ -25,7 +25,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void borrarPost(Post post) {
+    public void borrarPost(Post post, Usuario borrador) {
+        if (borrador.getId() == null) { throw new RuntimeException("Usuario no encontrado"); }
+
+        if (!"PROFESOR".equals(borrador.getRole())) {
+            throw new RuntimeException("Solo los profesores pueden borrar posts");
+        }
         postRepository.delete(post);
     }
 

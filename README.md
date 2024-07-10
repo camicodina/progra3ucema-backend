@@ -33,6 +33,8 @@ Diagrama de clases:
 Paso 1: Compilar el Proyecto
 > $ mvn clean install
 
+<p align="center"><img width=70% src="images/output_mvn.png"></p>
+
 Paso 2: Ejecutar la Aplicación
 > $ mvn spring-boot:run
 
@@ -48,6 +50,9 @@ Si todo está configurado correctamente, el siguiente mensaje aparecerá en la c
 Esta aplicación fue creada con un set de datos de prueba iniciales. Podemos validar que los datos de prueba se han creado correctamente de las siguientes formas:
 
 - Verificar en la Base de Datos: Accede a tu base de datos MySQL y verifica que las tablas y los datos de prueba están presentes.
+
+<p align="center"><img width=70% src="images/mysql.png"></p>
+
 - Consultar los Endpoints: Usa Postman o ejecuta comandos CURL para realizar solicitudes HTTP a la API.
 
 ```shell
