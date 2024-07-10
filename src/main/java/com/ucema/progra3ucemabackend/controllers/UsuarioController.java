@@ -23,13 +23,13 @@ public class UsuarioController {
     // POST ../api/usuario/alumno
     @PostMapping(value = "/alumno")
     public Usuario createAlumno(@RequestBody Alumno usuario) {
-        return usuarioService.createAlumno(usuario);
+        return usuarioService.crearAlumno(usuario);
     }
 
     // POST ../api/usuario/profesor
     @PostMapping(value = "/profesor")
     public Usuario createProfesor(@RequestBody Profesor usuario) {
-        return usuarioService.createProfesor(usuario);
+        return usuarioService.crearProfesor(usuario);
     }
 
     // PUT ../api/usuario
@@ -56,22 +56,26 @@ public class UsuarioController {
         return usuarioService.obtenerUsuarioPorId(id);
     }
 
+
     @PostMapping("/authenticate")
     public String authenticate(@RequestParam String username, @RequestParam String password) {
         return usuarioService.authenticate(username, password);
     }
-
-    /**
-     * Endpoint para obtener la información del usuario logueado mediante jwt
-     */
 
     @GetMapping(value = "/info")
     public Usuario getUserInfo() {
         return usuarioService.getUserInfo();
     }
 
-    @GetMapping("/verPerfil/{username}")
+
+    @GetMapping("/username/{username}")
     public Optional<Usuario> verOtroPerfil(@PathVariable String username) {
         return usuarioService.verOtroPerfil(username);
     }
+
+    @PostMapping("/{followerId}")
+    public void follow(@PathVariable Long IdSeguidor, @PathVariable Long IdSeguido) {
+        usuarioService.follow(IdSeguidor, IdSeguido);
+    }
+
 }

@@ -5,8 +5,6 @@ import com.ucema.progra3ucemabackend.configuration.JwtUtilities;
 import com.ucema.progra3ucemabackend.model.Alumno;
 import com.ucema.progra3ucemabackend.model.Profesor;
 import com.ucema.progra3ucemabackend.model.Usuario;
-import com.ucema.progra3ucemabackend.model.Post;
-import com.ucema.progra3ucemabackend.model.Etiqueta;
 
 import com.ucema.progra3ucemabackend.repositories.UsuarioRepository;
 import com.ucema.progra3ucemabackend.repositories.PostRepository;
@@ -37,14 +35,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public Alumno createAlumno(Alumno alumno) {
+    public Alumno crearAlumno(Alumno alumno) {
         alumno.setPassword(passwordEncoder.encode(alumno.getPassword()));
         return usuarioRepository.save(alumno);
     }
 
     @Override
     @Transactional
-    public Profesor createProfesor(Profesor profesor) {
+    public Profesor crearProfesor(Profesor profesor) {
         profesor.setPassword(passwordEncoder.encode(profesor.getPassword()));
         return usuarioRepository.save(profesor);
     }
@@ -73,21 +71,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Usuario> obtenerUsuarioPorId(Long id) {
         return usuarioRepository.findById(id);
     }
+
 
     @Override
     public String authenticate(String username, String password) {
         Usuario user = usuarioRepository.findByUsername(username).orElse(null);
 
-        if (user == null) {
-            return null;
-        }
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return null;
-        }
+        if (user == null) { return null; }
+        if (!passwordEncoder.matches(password, user.getPassword())) { return null; }
 
         // Generar el token a retornar
         return jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
@@ -102,6 +97,25 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     public Optional<Usuario> verOtroPerfil(String username) {
         return usuarioRepository.findByUsername(username);
+    }
+
+    public void follow(Long IdUser, Long IdSeguido) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(IdUser);
+        Optional<Usuario> seguidoOptional = usuarioRepository.findById(IdSeguido);
+
+        if (usuarioOptional.isPresent() && seguidoOptional.isPresent()) {
+            Usuario seguidor = usuarioOptional.get();
+            Usuario seguido = seguidoOptional.get();
+
+            if (!seguidor.getSiguiendo().contains(seguido)) {
+                seguidor.getSiguiendo().add(seguido);
+                seguido.getSeguidores().add(seguidor);
+
+                usuarioRepository.save(seguidor);
+                usuarioRepository.save(seguido);
+            }
+
+        } else { throw new RuntimeException("Usuario no encontrado"); }
     }
 
 }

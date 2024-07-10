@@ -5,12 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 // JPA Entity for User
 @Entity
@@ -47,6 +44,7 @@ public abstract class Usuario implements UserDetails {
 
     private List<Usuario> seguidores = new ArrayList<>();
 
+    // Constructores
 
     public Usuario(String username, String password, String name, String email) {
         this.username = username;
@@ -59,6 +57,9 @@ public abstract class Usuario implements UserDetails {
 
 
     // Getters y Setters
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id;}
 
     public String getName() {
         return name;
@@ -88,27 +89,14 @@ public abstract class Usuario implements UserDetails {
         this.password = newPass;
     }
 
+    public List<Usuario> getSiguiendo() { return siguiendo; }
+    public void setSiguiendo(List<Usuario> siguiendo) { this.siguiendo = siguiendo; }
+
+    public List<Usuario> getSeguidores() { return seguidores; }
+    public void setSeguidores(List<Usuario> seguidores) { this.seguidores = seguidores; }
+
     public abstract String getRole();
 
-    public List<Usuario> getSiguiendo() {
-        return siguiendo;
-    }
-
-    public List<Usuario> getSeguidores() {
-        return seguidores;
-    }
-
-    public void setId(Long id) { this.id = id;}
-    public Long getId() { return id; }
-
-
-
-    public void follow(Usuario usuarioASeguir) {
-        if (!siguiendo.contains(usuarioASeguir)) {
-            siguiendo.add(usuarioASeguir);
-               usuarioASeguir.seguidores.add(this);
-        }
-    }
 
     // Implementación de UserDetails
 

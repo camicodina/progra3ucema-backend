@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface UsuarioService {
     
-    Alumno createAlumno(Alumno alumno);
-    Profesor createProfesor(Profesor profesor);
+    Alumno crearAlumno(Alumno alumno);
+    Profesor crearProfesor(Profesor profesor);
 
     Usuario updateUsuario(Usuario usuario);
 
@@ -21,4 +21,6 @@ public interface UsuarioService {
     Usuario getUserInfo();
 
     Optional<Usuario> verOtroPerfil(String username);
+
+    void follow(Long IdSeguidor, Long IdSeguido);
 }
