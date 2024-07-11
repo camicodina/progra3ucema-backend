@@ -4,7 +4,6 @@ import com.ucema.progra3ucemabackend.model.Etiqueta;
 import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.services.EtiquetaService;
-import com.ucema.progra3ucemabackend.services.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,6 @@ public class EtiquetaController {
     @Autowired
     private EtiquetaService etiquetaService;
 
-    @Autowired
-    private UsuarioService usuarioService;
 
     // POST ../api/etiquetas
     @PostMapping("")

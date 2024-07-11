@@ -1,7 +1,5 @@
 package com.ucema.progra3ucemabackend.model;
 
-import com.ucema.progra3ucemabackend.repositories.EtiquetaRepository;
-import com.ucema.progra3ucemabackend.repositories.PostRepository;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -37,15 +35,6 @@ public class Profesor extends Usuario {
         return authorities;
     }
 
-    // Métodos adicionales
-    public void borrarPost(Post post, PostRepository postRepository) {
-        postRepository.delete(post);
-    }
-
-    public Etiqueta crearEtiqueta(String nombre, EtiquetaRepository etiquetaRepository) {
-        Etiqueta nuevaEtiqueta = new Etiqueta(nombre);
-        return etiquetaRepository.save(nuevaEtiqueta);
-    }
-
+    
 }
 
