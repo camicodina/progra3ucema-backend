@@ -33,7 +33,7 @@ Diagrama de clases:
 Paso 1: Compilar el Proyecto
 > $ mvn clean install
 
-<p align="center"><img width=70% src="images/output_mvn.png"></p>
+<p align="center"><img width=80% src="images/output_mvn.png"></p>
 
 Paso 2: Ejecutar la Aplicación
 > $ mvn spring-boot:run
@@ -51,7 +51,7 @@ Esta aplicación fue creada con un set de datos de prueba iniciales. Podemos val
 
 - Verificar en la Base de Datos: Accede a tu base de datos MySQL y verifica que las tablas y los datos de prueba están presentes.
 
-<p align="center"><img width=70% src="images/mysql.png"></p>
+<p align="center"><img width=80% src="images/mysql.png"></p>
 
 - Consultar los Endpoints: Usa Postman o ejecuta comandos CURL para realizar solicitudes HTTP a la API.
 
@@ -73,6 +73,40 @@ curl -X GET http://localhost:8081/api/muro/posts/alumno1
 
 
 ## **Detalles Adicionales** 📖
+
+### Método de Login (usando Postman)
+
+#### Configurar la solicitud de login
+
+- Abrir Postman y crear una nueva solicitud.
+- Seleccionar el tipo de solicitud como POST.
+- Establecer la URL al endpoint de autenticación
+
+```shell
+http://localhost:8081/api/auth/login
+```
+
+- Ir a la pestaña Body y seleccionar raw.
+- Elegir JSON del menú desplegable junto a raw.
+- En el cuerpo de la solicitud, proporcionar las credenciales de inicio de sesión en formato JSON
+
+Por ejemplo:
+```shell
+{
+    "username": "tu_usuario",
+    "password": "tu_contraseña"
+}
+```
+
+- Enviar la solicitud.
+
+Para efectuar el resto de operaciones debemos copiar el token JWT de la respuesta que recibimos.
+
+Por ejemplo:
+
+<p align="center"><img width=80% src="images/postman_auth.png"></p>
+
+<p align="center"><img width=80% src="images/get_postman.png"></p>
 
 ### Endpoints del API
 

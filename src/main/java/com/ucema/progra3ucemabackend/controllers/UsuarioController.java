@@ -56,12 +56,6 @@ public class UsuarioController {
         return usuarioService.obtenerUsuarioPorId(id);
     }
 
-
-    @PostMapping("/authenticate")
-    public String authenticate(@RequestParam String username, @RequestParam String password) {
-        return usuarioService.authenticate(username, password);
-    }
-
     @GetMapping(value = "/info")
     public Usuario getUserInfo() {
         return usuarioService.getUserInfo();
