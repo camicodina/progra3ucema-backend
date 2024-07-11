@@ -76,14 +76,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public String authenticate(String username, String password) {
-        Usuario user = usuarioRepository.findByUsername(username).orElse(null);
+        Usuario user = this.usuarioRepository.findByUsername(username).orElse(null);
 
         if (user == null) { return null; }
-        if (!passwordEncoder.matches(password, user.getPassword())) { return null; }
-
         // Generar el token a retornar
-        return jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
-
+        String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
+        return token;
     }
 
     @Override

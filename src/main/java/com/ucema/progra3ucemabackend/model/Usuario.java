@@ -45,7 +45,7 @@ public abstract class Usuario implements UserDetails {
 
     // Constructores
 
-    public Usuario(String username, String password, String name, String email) {
+    public Usuario(String username, String name, String email, String password) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -93,6 +93,8 @@ public abstract class Usuario implements UserDetails {
 
     public List<Usuario> getSeguidores() { return seguidores; }
     public void setSeguidores(List<Usuario> seguidores) { this.seguidores = seguidores; }
+
+    public String printUsuario() { return  "Usuario; " + this.name + " " + this.email + " " + this.password; }
 
     public abstract String getRole();
 
