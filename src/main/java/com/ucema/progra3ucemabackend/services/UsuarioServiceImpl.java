@@ -78,7 +78,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     public String authenticate(String username, String password) {
         Usuario user = this.usuarioRepository.findByUsername(username).orElse(null);
 
-        if (user == null) { return null; }
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+            return null;
+        }
+
         // Generar el token a retornar
         String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole());
         return token;
