@@ -25,7 +25,7 @@ Funcionalidades:
 - Sistema de Etiquetas: Los profesores pueden crear nuevas etiquetas para categorizar los posts.
 
 Diagrama de clases:
-<p align="center"><img width=70% src="images/Backend - TP Programación 3.drawio.png"></p>
+<p align="center"><img src="images/Backend - TP Programación 3.drawio.png"></p>
 
 
 ## **Modo de Uso** 📝
