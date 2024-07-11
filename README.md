@@ -76,7 +76,9 @@ curl -X GET http://localhost:8081/api/muro/posts/alumno1
 
 ### Método de Login
 
-Authentication: POST /api/auth/login
+Authentication: 
+- POST /api/auth/login
+- POST /api/auth/logout
 
 #### Configurar la solicitud de login (usando Postman)
 
