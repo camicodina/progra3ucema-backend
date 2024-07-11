@@ -67,16 +67,18 @@ curl -X GET http://localhost:8081/api/muro/posts/alumno1
 ```
 
 ## **Tecnologias** ⚙
-- Java: Lenguaje de programación principal.
+- Java 21: Lenguaje de programación principal.
 - Spring Boot: Framework utilizado para construir el backend.
-- MySQL: Base de datos utilizada para la persistencia.
+- MySQL 8: Base de datos utilizada para la persistencia.
 
 
 ## **Detalles Adicionales** 📖
 
-### Método de Login (usando Postman)
+### Método de Login
 
-#### Configurar la solicitud de login
+Authentication: POST /api/auth/login
+
+#### Configurar la solicitud de login (usando Postman)
 
 - Abrir Postman y crear una nueva solicitud.
 - Seleccionar el tipo de solicitud como POST.
@@ -88,13 +90,20 @@ http://localhost:8081/api/auth/login
 
 - Ir a la pestaña Body y seleccionar raw.
 - Elegir JSON del menú desplegable junto a raw.
-- En el cuerpo de la solicitud, proporcionar las credenciales de inicio de sesión en formato JSON
+- En el cuerpo de la solicitud, proporcionar las credenciales de inicio de sesión en formato JSON:
 
-Por ejemplo:
 ```shell
 {
     "username": "tu_usuario",
     "password": "tu_contraseña"
+}
+```
+Por ejemplo:
+
+```shell
+{
+    "username": "alumno1",
+    "password": "1234"
 }
 ```
 
@@ -102,15 +111,16 @@ Por ejemplo:
 
 Para efectuar el resto de operaciones debemos copiar el token JWT de la respuesta que recibimos.
 
-Por ejemplo:
+Demostración:
 
 <p align="center"><img width=80% src="images/postman_auth.png"></p>
 
 <p align="center"><img width=80% src="images/get_postman.png"></p>
 
-### Endpoints del API
 
-#### Usuarios
+### Otros Endpoints del API
+
+#### Usuario
 
 - Crear Alumno: POST /api/usuario/alumno
 - Crear Profesor: POST /api/usuario/profesor
@@ -121,13 +131,12 @@ Por ejemplo:
 
 - Obtener Usuario por Username: GET /api/usuario/username/{username}
 - Obtener Usuario por ID: GET /api/usuario/{id}
-- Autenticación de Usuario: POST /api/usuario/authenticate
 - Obtener Información del Usuario: GET /api/usuario/info
 
 - Ver Perfil de Otro Usuario: GET /api/usuario/perfil/{username}
 - Seguir a Otro Usuario: POST /api/usuario/{followerId}/follow/{followeeId}
 
-#### Posts
+#### Post
 
 - Crear Post: POST /api/posts
 
@@ -140,13 +149,14 @@ Por ejemplo:
 - Dar Like a Post: POST /api/posts/{id}/like
 - Quitar Like a Post: POST /api/posts/{id}/unlike
 
-#### Etiquetas
+#### Etiqueta
 
 - Crear Etiqueta: POST /api/etiquetas
 
 - Obtener Etiqueta por ID: GET /api/etiquetas/{id}
 - Obtener Todas las Etiquetas: GET /api/etiquetas
 - Obtener Etiqueta por Nombre: GET /api/etiquetas/nombre/{nombre}
+
 
 <br>
 
