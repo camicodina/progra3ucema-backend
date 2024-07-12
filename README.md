@@ -41,18 +41,22 @@ Para probar la app, se deben de tener instalados los siguientes componentes:
 - [Apache Maven](https://maven.apache.org/download.cgi) (version 3.9.8)
 
 Paso 1: Compilar el Proyecto
-> $ mvn clean install
+
+```bash
+    mvn clean install
+```
 
 <p align="center"><img width=80% src="images/output_mvn.png"></p>
 
 Paso 2: Ejecutar la Aplicación
-> $ mvn spring-boot:run
 
-o bien:
-> $ java -jar progra3ucemabackend.jar
+```bash
+    mvn spring-boot:run
+```
 
 Paso 3: Verificar la Ejecución
 Si todo está configurado correctamente, el siguiente mensaje aparecerá en la consola:
+
 > Progra3ucemaBackendApplication started
 
 ## **Instrucciones** 🦆
