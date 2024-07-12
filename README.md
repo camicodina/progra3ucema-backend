@@ -34,6 +34,12 @@ Diagrama de clases:
 
 ## **Modo de Uso** 📝
 
+Para probar la app, se deben de tener instalados los siguientes componentes:
+
+- [Java JDK 21](https://www.oracle.com/ar/java/technologies/downloads/#jdk21-windows)
+- [MySQL Server](https://dev.mysql.com/downloads/mysql/) (version 8.X)
+- [Apache Maven](https://maven.apache.org/download.cgi) (version 3.9.8)
+
 Paso 1: Compilar el Proyecto
 > $ mvn clean install
 
