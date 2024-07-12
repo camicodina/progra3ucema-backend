@@ -9,6 +9,7 @@ _Trabajo práctico de Programación III, Ingeniería Infotmática, Universidad d
 
 
 ## **Objetivos** 📌
+
 El objetivo de este trabajo es crear un desarrollo web completo, que comprende:
 
 1) Un backend funcional, que implemente persistencia y exponga la información por medio de una interfaz API RestFul;
@@ -17,14 +18,17 @@ El objetivo de este trabajo es crear un desarrollo web completo, que comprende:
 
 
 ## **El desarrollo** 🚀
+
 El proyecto es una implementación de un foro donde alumnos y profesores pueden compartir material de ciencia y tecnología (por ejemplo, papers y noticias interesantes) y contenido útil para las cursadas. Los profesores tienen la capacidad de borrar contenido ajeno si lo consideran necesario.
 
 Funcionalidades: 
+
 - Creación de usuarios: profesores (usuarios con permisos de administrador) y alumnos (usuarios comunes);
 - Gestión de Posts: Crear, borrar y listar posts asociados a etiquetas.
 - Sistema de Etiquetas: Los profesores pueden crear nuevas etiquetas para categorizar los posts.
 
 Diagrama de clases:
+
 <p align="center"><img src="images/Backend - TP Programación 3.drawio.png"></p>
 
 
@@ -67,6 +71,7 @@ curl -X GET http://localhost:8081/api/muro/posts/alumno1
 ```
 
 ## **Tecnologias** ⚙
+
 - Java 21: Lenguaje de programación principal.
 - Spring Boot: Framework utilizado para construir el backend.
 - MySQL 8: Base de datos utilizada para la persistencia.
@@ -77,6 +82,7 @@ curl -X GET http://localhost:8081/api/muro/posts/alumno1
 ### Método de Login
 
 Authentication: 
+
 - POST /api/auth/login
 - POST /api/auth/logout
 
@@ -100,6 +106,7 @@ http://localhost:8081/api/auth/login
     "password": "tu_contraseña"
 }
 ```
+
 Por ejemplo:
 
 ```shell
@@ -158,7 +165,6 @@ Demostración:
 - Obtener Etiqueta por ID: GET /api/etiquetas/{id}
 - Obtener Todas las Etiquetas: GET /api/etiquetas
 - Obtener Etiqueta por Nombre: GET /api/etiquetas/nombre/{nombre}
-
 
 <br>
 
