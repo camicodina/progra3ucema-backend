@@ -30,9 +30,8 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Deshabilitar la protección CSRF (Cross-Site Request Forgery), ya que no estamos usando sesiones en el front
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll() // Permitir a todos los usuarios loguearse
-                        .requestMatchers(HttpMethod.GET, "api/libro/**").permitAll() // Permitir a todos los usuarios hacer consultas sobre los libros
-                        .requestMatchers("api/libro/**").authenticated() // Solo los usuarios autenticados pueden hacer cambios en los libros
-                        .requestMatchers("api/prestamo/**").hasAuthority("PROFESOR") // Solo los profesores pueden acceder los préstamos
+                        .requestMatchers(HttpMethod.POST, "api/usuario/alumno").permitAll() // Permitir a todos los usuarios crear su usuario
+                        .requestMatchers(HttpMethod.POST, "api/usuario/profesor").permitAll() // Permitir a todos los usuarios crear su usuario
                         .anyRequest().authenticated() // Cualquier otra solicitud debe ser autenticada
                 )
                 .httpBasic(Customizer.withDefaults()) // Usar autenticación HTTP básica

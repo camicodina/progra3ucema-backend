@@ -4,6 +4,7 @@ import com.ucema.progra3ucemabackend.model.Etiqueta;
 import com.ucema.progra3ucemabackend.model.Usuario;
 
 import com.ucema.progra3ucemabackend.services.EtiquetaService;
+import com.ucema.progra3ucemabackend.services.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,14 @@ import java.util.List;
 public class EtiquetaController {
     @Autowired
     private EtiquetaService etiquetaService;
+    @Autowired
+    private UsuarioService usuarioService;
 
 
     // POST ../api/etiquetas
     @PostMapping("")
-    public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam Usuario usuario) {
+    public Etiqueta crearEtiqueta(@RequestParam String nombre, @RequestParam String username) {
+        Usuario usuario = usuarioService.getByUsername(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         if (usuario.getId() == null ) { throw new RuntimeException("Usuario no encontrado"); }
         try {
             return etiquetaService.crearEtiqueta(nombre, usuario);
