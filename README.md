@@ -69,17 +69,6 @@ Esta aplicación fue creada con un set de datos de prueba iniciales. Podemos val
 
 - Consultar los Endpoints: Usa Postman o ejecuta comandos CURL para realizar solicitudes HTTP a la API.
 
-```shell
-# Obtener todos los posts
-curl -X GET http://localhost:8081/api/muro/posts
-
-# Obtener el perfil de un usuario
-curl -X GET http://localhost:8081/api/muro/perfil/alumno1
-
-# Obtener posts de un usuario específico
-curl -X GET http://localhost:8081/api/muro/posts/alumno1
-```
-
 ## **Tecnologias** ⚙
 
 - Java 21: Lenguaje de programación principal.
